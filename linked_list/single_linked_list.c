@@ -35,7 +35,9 @@ void display(struct node *head)
   }
 
   while(head != NULL){
-   printf("%d  ",head->element);
+   printf("%d  \n",head->element);
+   printf("address of  head :  %p \n",head);
+   
    head = head->next;
  }
  printf("\n");
@@ -127,6 +129,29 @@ struct node * delete_node(struct node *head, int element)
   return head;
 }
 
+void reverse_display(struct node *head)
+{
+  if(head != NULL){
+    reverse_display(head->next);
+    printf("%d ",head->element);
+  }else
+  {
+  printf("\n");
+  }
+}
+struct node * new_head = NULL;
+void reverse_linkedlist(struct node *prev,struct node *cur)
+{
+  if(cur != NULL){
+    printf("address of prev : %p address of cur : %p\n",prev,cur);
+    reverse_linkedlist(cur,cur->next);
+    printf("address of prev : %p address of cur : %p\n",prev,cur);
+    cur->next = prev;
+  }else{
+    printf("Inside else : %p\n",prev);
+    new_head =  prev;
+  }
+}
 void main()
 {
   int choice = 0;
@@ -139,6 +164,8 @@ void main()
   printf("3. Search\n");
   printf("4. exit\n");
   printf("5. Delete\n");
+  printf("6. reverse display\n");
+  printf("7. reverse list\n");
   scanf("%d",&choice);
   switch(choice){
     case 1: printf("Enter Element\n");
@@ -156,7 +183,14 @@ void main()
     case 5: printf("Enter the element to be deleted\n");
             scanf("%d",&element);
             head = delete_node(head,element);
-            break; 
+            break;
+    case 6: reverse_display(head);
+            break;
+    case 7: printf("address of head : %p\n",head);
+            reverse_linkedlist(NULL,head);
+            head = new_head;
+            printf("address of head : %p\n",head); 
+            display(head);
   }
 }
 }
